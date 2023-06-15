@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="https://thymeleaf.org ">
+
+<head>
+    <style>
+        #menu{
+            font-size: 20px;
+            margin-top: 17px;
+        }
+        /********** Template CSS **********/
+        :root {
+            --primary: #13C5DD;
+            --secondary: #354F8E;
+            --light: #EFF5F9;
+            --dark: #1D2A4D;
+        }
+
+        .btn {
+            font-weight: 700;
+            transition: .5s;
+        }
+
+        .btn:hover {
+            -webkit-box-shadow: 0 8px 6px -6px #555555;
+            -moz-box-shadow: 0 8px 6px -6px #555555;
+            box-shadow: 0 8px 6px -6px #555555;
+        }
+        @media (min-width: 1200px) {
+            .container {
+                width: 1321px;
+            }
+        }
+        .container{
+            display: inline-block; !important;
+        }
+        .btn-primary {
+            color: #FFFFFF;
+        }
+
+        .btn-square {
+            width: 36px;
+            height: 36px;
+        }
+
+        .btn-sm-square {
+            width: 28px;
+            height: 28px;
+        }
+
+        .btn-lg-square {
+            width: 46px;
+            height: 46px;
+        }
+
+        .btn-square,
+        .btn-sm-square,
+        .btn-lg-square {
+            padding-left: 0;
+            padding-right: 0;
+            text-align: center;
+        }
+
+        .back-to-top {
+            position: fixed;
+            display: none;
+            right: 30px;
+            bottom: 0;
+            border-radius: 50% 50% 0 0;
+            z-index: 99;
+        }
+
+        .navbar-light .navbar-nav .nav-link {
+            font-family: 'Jost', sans-serif;
+            position: relative;
+            margin-left: 30px;
+            padding: 30px 0;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark);
+            outline: none;
+            transition: .5s;
+        }
+
+        .navbar-light .navbar-nav .nav-link:hover,
+        .navbar-light .navbar-nav .nav-link.active {
+            color: var(--primary);
+        }
+
+        @media (min-width: 992px) {
+            .navbar-light .navbar-nav .nav-link::before {
+                position: absolute;
+                content: "";
+                width: 0;
+                height: 5px;
+                bottom: 0;
+                left: 50%;
+                background: var(--primary);
+                transition: .5s;
+            }
+
+            .navbar-light .navbar-nav .nav-link:hover::before,
+            .navbar-light .navbar-nav .nav-link.active::before {
+                width: 100%;
+                left: 0;
+            }
+        }
+
+        @media (max-width: 991.98px) {
+            .navbar-light .navbar-nav .nav-link  {
+                margin-left: 0;
+                padding: 10px 0;
+            }
+        }
+
+        .hero-header {
+            background-image: url(https://img.freepik.com/premium-photo/doctor-holding-stethoscope-hospital-blur-blue-background_103324-537.jpg?w=2000);
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 665px;
+        }
+
+        .service-item {
+            position: relative;
+            height: 350px;
+            padding: 0 30px;
+            transition: .5s;
+        }
+
+        .service-item .service-icon {
+            width: 150px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary);
+            border-radius: 50%;
+            transform: rotate(-14deg);
+        }
+
+        .service-item .service-icon i {
+            transform: rotate(15deg);
+        }
+
+        .service-item a.btn {
+            position: absolute;
+            width: 60px;
+            bottom: -48px;
+            left: 50%;
+            margin-left: -30px;
+            opacity: 0;
+        }
+
+        .service-item:hover a.btn {
+            bottom: -24px;
+            opacity: 1;
+        }
+
+        .price-carousel::after {
+            position: absolute;
+            content: "";
+            width: 100%;
+            height: 50%;
+            bottom: 0;
+            left: 0;
+            background: var(--primary);
+            border-radius: 8px 8px 50% 50%;
+            z-index: -1;
+        }
+
+        .price-carousel .owl-nav {
+            margin-top: 35px;
+            width: 100%;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+        }
+
+        .price-carousel .owl-nav .owl-prev,
+        .price-carousel .owl-nav .owl-next{
+            position: relative;
+            margin: 0 5px;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            background: #FFFFFF;
+            font-size: 22px;
+            border-radius: 45px;
+            transition: .5s;
+        }
+
+        .price-carousel .owl-nav .owl-prev:hover,
+        .price-carousel .owl-nav .owl-next:hover {
+            color: var(--dark);
+        }
+
+        @media (min-width: 576px) {
+            .team-item .row {
+                height: 350px;
+            }
+        }
+
+        .team-carousel .owl-nav {
+            position: absolute;
+            padding: 0 45px;
+            width: 100%;
+            height: 45px;
+            top: calc(50% - 22.5px);
+            left: 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .team-carousel .owl-nav .owl-prev,
+        .team-carousel .owl-nav .owl-next {
+            position: relative;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFFFFF;
+            background: var(--primary);
+            border-radius: 45px;
+            font-size: 22px;
+            transition: .5s;
+        }
+
+        .team-carousel .owl-nav .owl-prev:hover,
+        .team-carousel .owl-nav .owl-next:hover {
+            background: var(--dark);
+        }
+
+        .testimonial-carousel .owl-dots {
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .testimonial-carousel .owl-dot {
+            position: relative;
+            display: inline-block;
+            margin: 0 5px;
+            width: 20px;
+            height: 20px;
+            background: var(--light);
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            transition: .5s;
+        }
+
+        .testimonial-carousel .owl-dot.active {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+        }
+
+        .testimonial-carousel .owl-item img {
+            width: 150px;
+            height: 150px;
+        }
+
+    </style>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <title>МЕДОБИНОВА</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+    <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css"
+          rel="stylesheet">
+    <script src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="webjars/jquery/1.9.1/jquery.min.js"></script>
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:wght@400;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+<!--    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">-->
+<!--    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet"/>-->
+
+<!--    &lt;!&ndash; Customized Bootstrap Stylesheet &ndash;&gt;-->
+<!--    <link href="css/bootstrap.min.css" rel="stylesheet">-->
+
+<!--    &lt;!&ndash; Template Stylesheet &ndash;&gt;-->
+<!--    <link href="css/style.css" rel="stylesheet">-->
+</head>
+
+<body>
+<!-- Navbar Start -->
+<div class="container-fluid sticky-top bg-white shadow-sm">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
+            <a href="/" class="navbar-brand">
+                <h1 class="m-0 text-uppercase text-primary"><i class="fa fa-clinic-medical me-2"></i>МЕДОБИНОВА</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div id="menu" class="navbar-nav ms-auto py-0">
+                    <a href="/" class="nav-item nav-link active">Почетна</a>
+                    <a href="/doktori" class="nav-item nav-link">Доктори</a>
+                    <a href="/pacienti" class="nav-item nav-link">Пациенти</a>
+<!--                    <a href="/upati" class="nav-item nav-link">Упати</a>-->
+                    <a href="/lekovi" class="nav-item nav-link">Лекови</a>
+                    <a href="/recepti" class="nav-item nav-link">Рецепти</a>
+                    <a href="/izvestai" class="nav-item nav-link">Извештаи</a>
+                    <a href="/dijagnozi" class="nav-item nav-link">Дијагнози</a>
+<!--                    <a href="/pregledi" class="nav-item nav-link">Прегледи</a>-->
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+<!-- Navbar End -->
+
+
+<!-- Hero Start -->
+<div class="container-fluid bg-primary py-5 mb-5 hero-header">
+    <div class="container py-5">
+        <div class="row justify-content-start">
+            <div class="col-lg-8 text-center text-lg-start">
+                <h5 class="d-inline-block text-primary text-uppercase"
+                    style="border-color: rgba(256, 256, 256, .3) !important; width:900px; padding-top:30px; text-align: right">Добредојдовте во МЕДОБИНОВА</h5>
+                <h1 style="color:cornflowerblue; width:1450px; padding-top:30px; text-align: right" class="display-1">Најдобар избор за вашето здравје!</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Hero End -->
+
+
+<!-- About Start -->
+<div style="margin-left:170px" class="container-fluid py-5">
+    <div class="container">
+        <div class="row gx-5">
+            <div class="col-lg-5 mb-5 mb-lg-0" style="min-height: 500px;">
+                <div class="position-relative h-100">
+                    <img class="position-absolute w-100 h-100 rounded" src="https://www.thehealthy.com/wp-content/uploads/2016/04/21-50-secrets-surgeon-residents-operating.jpg?resize=1024,683" style="object-fit: cover;">
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="mb-4">
+                    <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">За нас</h5>
+                    <h1 class="display-4">Најдобар медицински центар за вас и вашата фамилија!</h1>
+                </div>
+                <p>Tempor erat elitr at rebum at at clita aliquyam consetetur. Diam dolor diam ipsum et, tempor voluptua
+                    sit consetetur sit. Aliquyam diam amet diam et eos sadipscing labore. Clita erat ipsum et lorem et
+                    sit, sed stet no labore lorem sit. Sanctus clita duo justo et tempor consetetur takimata eirmod,
+                    dolores takimata consetetur invidunt magna dolores aliquyam dolores dolore. Amet erat amet et
+                    magna</p>
+                <div class="row g-3 pt-3">
+                    <div class="col-sm-3 col-6">
+                        <div class="bg-light text-center rounded-circle py-4">
+                            <i class="fa fa-3x fa-user-md text-primary mb-3"></i>
+                            <h6 class="mb-0">Квалификувани<small class="d-block text-primary">Доктори</small></h6>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-6">
+                        <div class="bg-light text-center rounded-circle py-4">
+                            <i class="fa fa-3x fa-procedures text-primary mb-3"></i>
+                            <h6 class="mb-0">Итна<small class="d-block text-primary">Помош</small></h6>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-6">
+                        <div class="bg-light text-center rounded-circle py-4">
+                            <i class="fa fa-3x fa-microscope text-primary mb-3"></i>
+                            <h6 class="mb-0">Точни<small class="d-block text-primary">Тестирања</small></h6>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-6">
+                        <div class="bg-light text-center rounded-circle py-4">
+                            <i class="fa fa-3x fa-ambulance text-primary mb-3"></i>
+                            <h6 class="mb-0">Бесплатни<small class="d-block text-primary">Амбулантски возила</small>
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- About End -->
+
+
+<!-- Services Start -->
+<div style="margin-left:170px" class="container-fluid py-5">
+    <div class="container">
+        <div class="text-center mx-auto mb-5" style="max-width: 500px;">
+            <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">Услуги</h5>
+            <h1 class="display-4">Најдобри медицински услуги</h1>
+        </div>
+        <div class="row g-5">
+            <div class="col-lg-4 col-md-6">
+                <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
+                    <div class="service-icon mb-4">
+                        <i class="fa fa-2x fa-user-md text-white"></i>
+                    </div>
+                    <h4 class="mb-3">Итна Нега</h4>
+                    <p class="m-0">Kasd dolor no lorem nonumy sit labore tempor at justo rebum rebum stet, justo elitr
+                        dolor amet sit</p>
+                    <a class="btn btn-lg btn-primary rounded-pill" href="">
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
+                    <div class="service-icon mb-4">
+                        <i class="fa fa-2x fa-procedures text-white"></i>
+                    </div>
+                    <h4 class="mb-3">Операции</h4>
+                    <p class="m-0">Kasd dolor no lorem nonumy sit labore tempor at justo rebum rebum stet, justo elitr
+                        dolor amet sit</p>
+                    <a class="btn btn-lg btn-primary rounded-pill" href="">
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
+                    <div class="service-icon mb-4">
+                        <i class="fa fa-2x fa-stethoscope text-white"></i>
+                    </div>
+                    <h4 class="mb-3">Домашни Прегледи</h4>
+                    <p class="m-0">Kasd dolor no lorem nonumy sit labore tempor at justo rebum rebum stet, justo elitr
+                        dolor amet sit</p>
+                    <a class="btn btn-lg btn-primary rounded-pill" href="">
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
+                    <div class="service-icon mb-4">
+                        <i class="fa fa-2x fa-ambulance text-white"></i>
+                    </div>
+                    <h4 class="mb-3">Амбулантски Услуги</h4>
+                    <p class="m-0">Kasd dolor no lorem nonumy sit labore tempor at justo rebum rebum stet, justo elitr
+                        dolor amet sit</p>
+                    <a class="btn btn-lg btn-primary rounded-pill" href="">
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
+                    <div class="service-icon mb-4">
+                        <i class="fa fa-2x fa-pills text-white"></i>
+                    </div>
+                    <h4 class="mb-3">Лекови & Фармација</h4>
+                    <p class="m-0">Kasd dolor no lorem nonumy sit labore tempor at justo rebum rebum stet, justo elitr
+                        dolor amet sit</p>
+                    <a class="btn btn-lg btn-primary rounded-pill" href="">
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
+                    <div class="service-icon mb-4">
+                        <i class="fa fa-2x fa-microscope text-white"></i>
+                    </div>
+                    <h4 class="mb-3">Крвна слика</h4>
+                    <p class="m-0">Kasd dolor no lorem nonumy sit labore tempor at justo rebum rebum stet, justo elitr
+                        dolor amet sit</p>
+                    <a class="btn btn-lg btn-primary rounded-pill" href="">
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Services End -->
+
+
+<!-- Footer Start -->
+<div style="padding-left: 170px;" class="container-fluid bg-dark text-light mt-5 py-5">
+    <div class="container py-5">
+        <div class="row g-5">
+            <div class="col-lg-3 col-md-6">
+                <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
+                    Контактирајте не</h4>
+                <p class="mb-4">No dolore ipsum accusam no lorem. Invidunt sed clita kasd clita et et dolor sed
+                    dolor</p>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary me-3"></i>Руѓер Бошковиќ, Скопје, Македонија
+                </p>
+                <p class="mb-2"><i class="fa fa-envelope text-primary me-3"></i>medinova@hospital.com</p>
+                <p class="mb-0"><i class="fa fa-phone-alt text-primary me-3"></i>+02 345 67890</p>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
+                    Најпребарувани линкови</h4>
+                <div class="d-flex flex-column justify-content-start">
+                    <a class="text-light mb-2" href="#"><i class="fa fa-angle-right me-2"></i>Прегледи</a>
+                    <a class="text-light mb-2" href="#"><i class="fa fa-angle-right me-2"></i>Дијагнози</a>
+                    <a class="text-light mb-2" href="#"><i class="fa fa-angle-right me-2"></i>Извештаи</a>
+                    <a class="text-light mb-2" href="#"><i class="fa fa-angle-right me-2"></i>Рецепти</a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
+                    Популарни линкови</h4>
+                <div class="d-flex flex-column justify-content-start">
+                    <a class="text-light mb-2" href="#"><i class="fa fa-angle-right me-2"></i>Почетна</a>
+                    <a class="text-light mb-2" href="#"><i class="fa fa-angle-right me-2"></i>Доктори</a>
+                    <a class="text-light mb-2" href="#"><i class="fa fa-angle-right me-2"></i>Лекови</a>
+                    <a class="text-light mb-2" href="#"><i class="fa fa-angle-right me-2"></i>Пациенти</a>
+                    <a class="text-light mb-2" href="#"><i class="fa fa-angle-right me-2"></i>Упати</a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <h6 class="text-primary text-uppercase mt-4 mb-3">Заследете не</h6>
+                <div class="d-flex">
+                    <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-2" href="#"><i
+                            class="fab fa-twitter"></i></a>
+                    <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-2" href="#"><i
+                            class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-2" href="#"><i
+                            class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-lg btn-primary btn-lg-square rounded-circle" href="#"><i
+                            class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid bg-dark text-light border-top border-secondary py-4">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-md-6 text-center text-md-start">
+                <p class="mb-md-0">&copy; <a class="text-primary" href="#">МЕДИНОВА</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Footer End -->
+
+
+<!-- Back to Top -->
+<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<!--<script src="lib/easing/easing.min.js"></script>-->
+<!--<script src="lib/waypoints/waypoints.min.js"></script>-->
+<!--<script src="lib/owlcarousel/owl.carousel.min.js"></script>-->
+<!--<script src="lib/tempusdominus/js/moment.min.js"></script>-->
+<!--<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>-->
+<!--<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>-->
+
+<!-- Template Javascript -->
+<!--<script src="js/main.js"></script>-->
+</body>
+
+</html>

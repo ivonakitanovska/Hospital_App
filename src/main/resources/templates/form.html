@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>WP Exam</title>
+</head>
+<body>
+<!-- The form should submit to StudentController.create or StudentController.update,
+     depending on whether we are creating or editing an entity -->
+<!--/*@thymesVar id="upat" type=""*/-->
+<form th:method="POST" th:action="@{'/form'}">
+    <div>
+        <label for="f1">Termin</label>
+        <input type="name"
+               id="f1"
+               name="termin"
+               th:value="${upat?.getDatumIzdavanje()}"
+               required>
+    </div>
+    <div>
+        <label for="f2">Doktor upatuva</label>
+        <input type="name"
+               id="f2"
+               name="name"
+               th:value="${upat.getDoktorUpatuva().getFullName()}"
+               required>
+    </div>
+    <div>
+        <label for="f3">Doktor upaten kon</label>
+        <input type="name"
+               id="f3"
+               name="name"
+               th:value="${upat.getDoktorUpatenKon().getFullName()}"
+               required>
+    </div>
+    <div>
+        <label for="f4">Embg</label>
+        <input type="text"
+               id="f4"
+               name="embg"
+               th:value="${upat.getPacient().getEmbg()}"
+               required>
+    </div>
+
+    <button id="submit" type="submit">Submit</button>
+    <a id="back" href="/students" type="button" class="btn btn-primary">Back to students</a>
+</form>
+
+<div>
+    <ul id="nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/logout">Logout</a></li>
+    </ul>
+</div>
+
+</body>
+</html>
